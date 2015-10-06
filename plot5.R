@@ -6,7 +6,6 @@ NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
 library(dplyr)
-library(reshape2)
 library(ggplot2)
 
 #subset Baltimore Emission data and then group them by year, and finally summarize the data for the total emissions of each year
@@ -20,7 +19,7 @@ png(filename="Plot5.png",width = 480, height = 480, units = "px", pointsize = 12
 ggplot(baltDFmotor,aes(year,totalMotorEmission))+
         geom_bar(stat="identity",width=0.6,fill="lightblue")+
         scale_x_discrete("Year")+
-        scale_y_continuous("Mean Emission from Motor Vehicle (ton)")+
+        scale_y_continuous("Total Emission from Motor Vehicle (ton)")+
         stat_smooth(aes(group=1),method="lm", se=FALSE, color="red", size=1.5)+
         theme_bw()+
         ggtitle("Motor Vehicle Emission trend in Baltimore")+

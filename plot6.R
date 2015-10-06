@@ -6,7 +6,6 @@ NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
 library(dplyr)
-library(reshape2)
 library(ggplot2)
 
 #subset Baltimore and Los Angeles Emission data,  then group them by year and their city name, 
@@ -14,9 +13,6 @@ library(ggplot2)
 motorDF<-NEI%>% filter(fips=="24510"|fips=="06037")%>%filter(type=="ON-ROAD")%>%
         group_by(year,fips)%>%
         summarise(totalMotorEmission=sum(Emissions))
-
-#mutate(data,centred=total_ems-total_ems[1])
-
 
 motorDF[,1:2]<-lapply(motorDF[,1:2],as.factor)
 #check the classes for each variable
@@ -32,7 +28,7 @@ ggplot(motorDF,aes(year,totalMotorEmission))+
         geom_point(size=4,color="black")+
         facet_grid(.~fips)+
         geom_smooth(method="lm", se=FALSE, col="red",aes(group=1))+
-        labs(x="Year",y="Mean Emission (ton)",title="Motor Vehicle Emissions")+
+        labs(x="Year",y="Total Emission (ton)",title="Motor Vehicle Emissions")+
         ggtitle("Motor Vehicle Emission trend")+
         theme_bw()+
         theme(axis.title=element_text(size=12.5))+
